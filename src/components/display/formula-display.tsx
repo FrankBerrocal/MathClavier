@@ -25,11 +25,6 @@ export const FormulaDisplay = ({ latex_string }: FormulaDisplayProps) => {
   return (
     <div className="math-display-sleek" id="formula-canvas-area">
       <div ref={container_ref} className="text-5xl text-slate-700 tracking-wider" />
-      <div className="absolute top-4 left-4 flex space-x-2">
-        <div className="w-3 h-3 rounded-full bg-slate-200"></div>
-        <div className="w-3 h-3 rounded-full bg-slate-200"></div>
-        <div className="w-3 h-3 rounded-full bg-slate-200"></div>
-      </div>
     </div>
   );
 };

@@ -6,9 +6,13 @@ interface KeypadProps {
 }
 
 export const Keypad = ({ on_symbol_click }: KeypadProps) => {
-  const [active_tab, set_active_tab] = useState<string>("Algebra");
+  const PREFERRED_ORDER: MathSymbol["category"][] = ["Algebra", "Trigonometry", "Calculus", "Statistics", "Set Operations", "Greek", "Letters"];
+  
+  const categories = PREFERRED_ORDER.filter(cat => 
+    MATH_SYMBOLS.some(s => s.category === cat) && cat !== "Numbers"
+  );
 
-  const categories = Array.from(new Set(MATH_SYMBOLS.map(s => s.category)));
+  const [active_tab, set_active_tab] = useState<string>(categories[0] || "Algebra");
 
   const filtered_symbols = MATH_SYMBOLS.filter(s => s.category === active_tab);
 

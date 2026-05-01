@@ -13,34 +13,27 @@ export const DISCLAIMER_TEXT = {
 export interface MathSymbol {
   label: string;
   latex: string;
-  category: "Numbers" | "Algebra" | "Statistics" | "Set Operations" | "Calculus" | "Trigonometry" | "Greek";
+  category: "Algebra" | "Statistics" | "Set Operations" | "Calculus" | "Trigonometry" | "Greek" | "Numbers" | "Letters";
 }
 
 export const MATH_SYMBOLS: MathSymbol[] = [
-  // Numbers
-  { label: "0", latex: "0", category: "Numbers" },
-  { label: "1", latex: "1", category: "Numbers" },
-  { label: "2", latex: "2", category: "Numbers" },
-  { label: "3", latex: "3", category: "Numbers" },
-  { label: "4", latex: "4", category: "Numbers" },
-  { label: "5", latex: "5", category: "Numbers" },
-  { label: "6", latex: "6", category: "Numbers" },
-  { label: "7", latex: "7", category: "Numbers" },
-  { label: "8", latex: "8", category: "Numbers" },
-  { label: "9", latex: "9", category: "Numbers" },
-  { label: ".", latex: ".", category: "Numbers" },
-  
+  // Letters (Common Variables)
+  { label: "a", latex: "a", category: "Letters" },
+  { label: "b", latex: "b", category: "Letters" },
+  { label: "c", latex: "c", category: "Letters" },
+  { label: "x", latex: "x", category: "Letters" },
+  { label: "y", latex: "y", category: "Letters" },
+  { label: "z", latex: "z", category: "Letters" },
+
   // Algebra
   { label: "+", latex: "+", category: "Algebra" },
   { label: "−", latex: "-", category: "Algebra" },
   { label: "×", latex: "\\times", category: "Algebra" },
   { label: "÷", latex: "\\div", category: "Algebra" },
   { label: "=", latex: "=", category: "Algebra" },
-  { label: "x", latex: "x", category: "Algebra" },
-  { label: "y", latex: "y", category: "Algebra" },
-  { label: "z", latex: "z", category: "Algebra" },
   { label: "x²", latex: "x^2", category: "Algebra" },
   { label: "xⁿ", latex: "x^{n}", category: "Algebra" },
+  { label: "xₙ", latex: "x_{n}", category: "Algebra" },
   { label: "√x", latex: "\\sqrt{x}", category: "Algebra" },
   { label: "ⁿ√x", latex: "\\sqrt[n]{x}", category: "Algebra" },
   { label: "a/b", latex: "\\frac{n}{d}", category: "Algebra" },
@@ -92,4 +85,22 @@ export const MATH_SYMBOLS: MathSymbol[] = [
   { label: "ε", latex: "\\epsilon", category: "Greek" },
   { label: "ζ", latex: "\\zeta", category: "Greek" },
   { label: "η", latex: "\\eta", category: "Greek" },
+  { label: "θ", latex: "\\theta", category: "Greek" },
+  { label: "ι", latex: "\\iota", category: "Greek" },
+  { label: "κ", latex: "\\kappa", category: "Greek" },
+  { label: "λ", latex: "\\lambda", category: "Greek" },
+  { label: "μ", latex: "\\mu", category: "Greek" },
+  { label: "ν", latex: "\\nu", category: "Greek" },
+  { label: "ξ", latex: "\\xi", category: "Greek" },
+  { label: "π", latex: "\\pi", category: "Greek" },
+  { label: "ρ", latex: "\\rho", category: "Greek" },
+  { label: "σ", latex: "\\sigma", category: "Greek" },
+  { label: "τ", latex: "\\tau", category: "Greek" },
+  { label: "φ", latex: "\\phi", category: "Greek" },
+  { label: "χ", latex: "\\chi", category: "Greek" },
+  { label: "ψ", latex: "\\psi", category: "Greek" },
+  { label: "ω", latex: "\\omega", category: "Greek" },
+  { label: "Δ", latex: "\\Delta", category: "Greek" },
+  { label: "Σ", latex: "\\Sigma", category: "Greek" },
+  { label: "Ω", latex: "\\Omega", category: "Greek" },
 ];
