@@ -1,0 +1,6 @@
+{
+  "name": "MathClavier",
+  "description": "A professional math formula processor for Algebra and Statistics by Frank Berrocal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MATH_RENDERING", "IMAGE_EXPORT"]
+}
