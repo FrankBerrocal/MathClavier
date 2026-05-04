@@ -6,7 +6,7 @@ interface KeypadProps {
 }
 
 export const Keypad = ({ on_symbol_click }: KeypadProps) => {
-  const PREFERRED_ORDER: MathSymbol["category"][] = ["Algebra", "MicroEconomics", "Trigonometry", "Calculus", "Statistics", "Set Operations", "Greek", "Letters"];
+  const PREFERRED_ORDER: MathSymbol["category"][] = ["Algebra", "MicroEconomics", "Trigonometry", "Calculus", "Statistics", "Set Operations", "Greek", "Variables"];
   
   const categories = PREFERRED_ORDER.filter(cat => 
     MATH_SYMBOLS.some(s => s.category === cat) && cat !== "Numbers"

@@ -13,17 +13,17 @@ export const DISCLAIMER_TEXT = {
 export interface MathSymbol {
   label: string;
   latex: string;
-  category: "Algebra" | "Statistics" | "Set Operations" | "Calculus" | "Trigonometry" | "Greek" | "Numbers" | "Letters" | "MicroEconomics";
+  category: "Algebra" | "Statistics" | "Set Operations" | "Calculus" | "Trigonometry" | "Greek" | "Numbers" | "Variables" | "MicroEconomics";
 }
 
 export const MATH_SYMBOLS: MathSymbol[] = [
-  // Letters (Common Variables)
-  { label: "a", latex: "a", category: "Letters" },
-  { label: "b", latex: "b", category: "Letters" },
-  { label: "c", latex: "c", category: "Letters" },
-  { label: "x", latex: "x", category: "Letters" },
-  { label: "y", latex: "y", category: "Letters" },
-  { label: "z", latex: "z", category: "Letters" },
+  // Variables (Common alphabetic symbols)
+  { label: "a", latex: "a", category: "Variables" },
+  { label: "b", latex: "b", category: "Variables" },
+  { label: "c", latex: "c", category: "Variables" },
+  { label: "x", latex: "x", category: "Variables" },
+  { label: "y", latex: "y", category: "Variables" },
+  { label: "z", latex: "z", category: "Variables" },
 
   // Algebra
   { label: "+", latex: "+", category: "Algebra" },
