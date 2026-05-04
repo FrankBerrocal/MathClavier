@@ -6,6 +6,7 @@ import * as math from "mathjs";
 interface FormulaCalculatorProps {
   latex: string;
   on_focus_variable: (variable_name: string | null) => void;
+  on_result_change?: (result: string | null) => void;
   active_variable: string | null;
   variable_values: Record<string, string>;
   set_variable_values: React.Dispatch<React.SetStateAction<Record<string, string>>>;
@@ -14,6 +15,7 @@ interface FormulaCalculatorProps {
 export const FormulaCalculator = ({ 
   latex, 
   on_focus_variable, 
+  on_result_change,
   active_variable, 
   variable_values, 
   set_variable_values 
@@ -23,28 +25,49 @@ export const FormulaCalculator = ({
   const [error, set_error] = useState<string | null>(null);
   const [is_solving, set_is_solving] = useState(false);
 
+  // Report result back when it changes
+  useEffect(() => {
+    on_result_change?.(result);
+  }, [result, on_result_change]);
+
   // Extract variables from LaTeX
   const variables = useMemo(() => {
-    const cleaned = latex.replace(/\\[a-zA-Z]+/g, ' ');
-    const matches = cleaned.match(/[a-zA-Z]/g) || [];
-    return Array.from(new Set(matches)).sort();
+    // 1. Remove LaTeX text blocks - we treat them as labels, not variables
+    const no_text = latex.replace(/\\text\{[^}]*\}/g, ' ');
+    // 2. Remove LaTeX commands (e.g. \frac, \sqrt)
+    const cleaned = no_text.replace(/\\[a-zA-Z]+/g, ' ');
+    // 3. Match words (supporting multi-char variables like TC, MR)
+    const math_keywords = ['sin', 'cos', 'tan', 'log', 'ln', 'sqrt', 'exp', 'PI', 'mu', 'sigma', 'theta', 'phi', 'alpha', 'beta', 'gamma', 'delta', 'epsilon'];
+    const matches = cleaned.match(/[a-zA-Z]+/g) || [];
+    // Only return variables (words that aren't math functions/constants)
+    return Array.from(new Set(matches))
+      .filter(v => !math_keywords.includes(v))
+      .sort((a,b) => a.localeCompare(b));
   }, [latex]);
 
   // Sync variables with values state
   useEffect(() => {
-    const new_values = { ...variable_values };
-    let changed = false;
-    
-    variables.forEach(v => {
-      if (!(v in new_values)) {
-        new_values[v] = "";
-        changed = true;
-      }
-    });
+    set_variable_values(prev => {
+      const new_values = { ...prev };
+      let changed = false;
+      
+      variables.forEach(v => {
+        if (!(v in new_values)) {
+          new_values[v] = "";
+          changed = true;
+        }
+      });
+      
+      // Remove variables no longer in formula
+      Object.keys(new_values).forEach(k => {
+        if (!variables.includes(k)) {
+          delete new_values[k];
+          changed = true;
+        }
+      });
 
-    if (changed) {
-      set_variable_values(new_values);
-    }
+      return changed ? new_values : prev;
+    });
   }, [variables]);
 
   // Reset results when formula is cleared
@@ -81,6 +104,9 @@ export const FormulaCalculator = ({
       // 3. Robust LaTeX to Math String Translation
       const toMathStr = (tex: string) => {
         let s = tex;
+        // Strip text blocks first
+        s = s.replace(/\\text\{([^}]+)\}/g, "");
+
         // Handle Greek symbols used as variables (e.g. \mu, \sigma, \pi)
         const greekMap: Record<string, string> = {
           "\\pi": "PI",
@@ -109,8 +135,12 @@ export const FormulaCalculator = ({
           .replace(/\^\{([^}]+)\}/g, "^($1)")
           .replace(/\^([0-9a-zA-Z])/g, "^($1)")
           .replace(/_\{([^}]+)\}/g, "_$1")
+          .replace(/\\ln/g, "log")
+          .replace(/\\log/g, "log10")
+          .replace(/\\cup|\\cap|\\in|\\subset|\\subseteq|\\setminus|\\emptyset|U/g, "")
+          .replace(/\^\{c\}|'/g, "") // Strip complement notation
           .replace(/\\left\(/g, "(")
-          .replace(/\\right\(/g, ")")
+          .replace(/\\right\)/g, ")")
           .replace(/\{([^}]+)\}/g, "($1)")
           .replace(/\\int|\\sum/g, "") // Strip calculus names 
           .replace(/\\[a-zA-Z]+/g, "") // Strip remaining commands

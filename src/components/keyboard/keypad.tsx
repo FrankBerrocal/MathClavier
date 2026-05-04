@@ -6,7 +6,7 @@ interface KeypadProps {
 }
 
 export const Keypad = ({ on_symbol_click }: KeypadProps) => {
-  const PREFERRED_ORDER: MathSymbol["category"][] = ["Algebra", "Trigonometry", "Calculus", "Statistics", "Set Operations", "Greek", "Letters"];
+  const PREFERRED_ORDER: MathSymbol["category"][] = ["Algebra", "MicroEconomics", "Trigonometry", "Calculus", "Statistics", "Set Operations", "Greek", "Letters"];
   
   const categories = PREFERRED_ORDER.filter(cat => 
     MATH_SYMBOLS.some(s => s.category === cat) && cat !== "Numbers"
@@ -18,20 +18,22 @@ export const Keypad = ({ on_symbol_click }: KeypadProps) => {
 
   return (
     <div className="sleek-card flex-1 flex flex-col h-full">
-      <div className="flex bg-slate-50 border-b border-slate-200 px-4">
-        {categories.map(category => (
-          <button
-            key={category}
-            onClick={() => set_active_tab(category)}
-            className={`px-6 py-3 text-xs font-bold uppercase tracking-tighter transition-all whitespace-nowrap ${
-              active_tab === category 
-                ? "text-blue-600 border-b-2 border-blue-600" 
-                : "text-slate-400 hover:text-slate-600"
-            }`}
-          >
-            {category}
-          </button>
-        ))}
+      <div className="flex bg-slate-50 border-b border-slate-200 overflow-x-auto no-scrollbar scroll-smooth">
+        <div className="flex min-w-max px-2">
+          {categories.map(category => (
+            <button
+              key={category}
+              onClick={() => set_active_tab(category)}
+              className={`px-4 py-3 text-[10px] font-bold uppercase tracking-widest transition-all whitespace-nowrap border-b-2 ${
+                active_tab === category 
+                  ? "text-blue-600 border-blue-600 bg-white" 
+                  : "text-slate-400 border-transparent hover:text-slate-600 hover:bg-slate-100/50"
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
       </div>
       
       <div className="flex-1 p-4 grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 overflow-y-auto content-start">

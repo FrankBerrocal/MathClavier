@@ -22,6 +22,7 @@ export default function App() {
   // Variable Calculation State
   const [active_variable, set_active_variable] = useState<string | null>(null);
   const [variable_values, set_variable_values] = useState<Record<string, string>>({});
+  const [calculated_result, set_calculated_result] = useState<string | null>(null);
 
   // Guided Input Stack for nested structures
   const [guide_stack, set_guide_stack] = useState<{ mode: string; step: number }[]>([]);
@@ -117,8 +118,32 @@ export default function App() {
       return;
     }
 
+    if (symbol.latex === "\\text{ }") {
+      const { new_val } = insert_at_cursor("\\text{");
+      set_latex_string(new_val);
+      set_guide_stack(prev => [...prev, { mode: "text", step: 1 }]);
+      focus_textarea();
+      return;
+    }
+
     if (symbol.latex === "( )") {
       const { new_val } = insert_at_cursor("\\left(");
+      set_latex_string(new_val);
+      set_guide_stack(prev => [...prev, { mode: "parentheses", step: 1 }]);
+      focus_textarea();
+      return;
+    }
+
+    if (symbol.latex === "\\log(") {
+      const { new_val } = insert_at_cursor("\\log \\left(");
+      set_latex_string(new_val);
+      set_guide_stack(prev => [...prev, { mode: "parentheses", step: 1 }]);
+      focus_textarea();
+      return;
+    }
+
+    if (symbol.latex === "\\ln(") {
+      const { new_val } = insert_at_cursor("\\ln \\left(");
       set_latex_string(new_val);
       set_guide_stack(prev => [...prev, { mode: "parentheses", step: 1 }]);
       focus_textarea();
@@ -240,16 +265,22 @@ export default function App() {
 
     set_is_exporting(true);
     try {
-      const data_url = await toJpeg(element, { quality: 0.95, backgroundColor: "#ffffff" });
+      // High-quality professional capture
+      const data_url = await toJpeg(element, { 
+        quality: 1, 
+        backgroundColor: "#ffffff",
+        pixelRatio: 4, 
+      });
       const link = document.createElement("a");
       link.download = `mathclavier-formula-${Date.now()}.jpg`;
       link.href = data_url;
       link.click();
       
       confetti({
-        particleCount: 100,
+        particleCount: 150,
         spread: 70,
-        origin: { y: 0.6 }
+        origin: { y: 0.6 },
+        colors: ['#3b82f6', '#10b981', '#f59e0b']
       });
     } catch (err) {
       console.error("Export failed:", err);
@@ -259,7 +290,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-sleek-bg">
+    <div className="min-h-screen flex flex-col bg-slate-50 font-sans selection:bg-blue-100 selection:text-blue-700">
       <Header />
 
       <main className="flex-grow p-4 md:p-6 flex flex-col space-y-6 max-w-7xl mx-auto w-full">
@@ -288,7 +319,11 @@ export default function App() {
           </div>
 
           <div className="sleek-card min-h-[220px] flex flex-col">
-            <FormulaDisplay latex_string={latex_string} />
+            <FormulaDisplay 
+              latex_string={latex_string} 
+              variable_values={variable_values}
+              result={calculated_result}
+            />
             <div className="h-8 bg-slate-50 border-t border-slate-100 px-6 flex items-center justify-between text-[10px] text-slate-400 uppercase tracking-widest">
               <span>LaTeX Render Engine Active</span>
               <div className="flex gap-4">
@@ -405,6 +440,7 @@ export default function App() {
           <FormulaCalculator 
             latex={latex_string}
             on_focus_variable={set_active_variable}
+            on_result_change={set_calculated_result}
             active_variable={active_variable}
             variable_values={variable_values}
             set_variable_values={set_variable_values}

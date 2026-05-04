@@ -13,7 +13,7 @@ export const DISCLAIMER_TEXT = {
 export interface MathSymbol {
   label: string;
   latex: string;
-  category: "Algebra" | "Statistics" | "Set Operations" | "Calculus" | "Trigonometry" | "Greek" | "Numbers" | "Letters";
+  category: "Algebra" | "Statistics" | "Set Operations" | "Calculus" | "Trigonometry" | "Greek" | "Numbers" | "Letters" | "MicroEconomics";
 }
 
 export const MATH_SYMBOLS: MathSymbol[] = [
@@ -38,6 +38,9 @@ export const MATH_SYMBOLS: MathSymbol[] = [
   { label: "ⁿ√x", latex: "\\sqrt[n]{x}", category: "Algebra" },
   { label: "a/b", latex: "\\frac{n}{d}", category: "Algebra" },
   { label: "( )", latex: "( )", category: "Algebra" },
+  { label: "Text", latex: "\\text{ }", category: "Algebra" },
+  { label: "log", latex: "\\log(", category: "Algebra" },
+  { label: "ln", latex: "\\ln(", category: "Algebra" },
   { label: "±", latex: "\\pm", category: "Algebra" },
   { label: "≈", latex: "\\approx", category: "Algebra" },
   
@@ -61,6 +64,12 @@ export const MATH_SYMBOLS: MathSymbol[] = [
   { label: "∅", latex: "\\emptyset", category: "Set Operations" },
   { label: "∀", latex: "\\forall", category: "Set Operations" },
   { label: "∃", latex: "\\exists", category: "Set Operations" },
+  { label: "Aᶜ", latex: "^{c}", category: "Set Operations" },
+  { label: "A'", latex: "'", category: "Set Operations" },
+  { label: "U", latex: "U", category: "Set Operations" },
+  { label: "∖", latex: "\\setminus", category: "Set Operations" },
+  { label: "⊆", latex: "\\subseteq", category: "Set Operations" },
+  { label: "( )", latex: "( )", category: "Set Operations" },
   
   // Calculus
   { label: "∫", latex: "\\int", category: "Calculus" },
@@ -103,4 +112,22 @@ export const MATH_SYMBOLS: MathSymbol[] = [
   { label: "Δ", latex: "\\Delta", category: "Greek" },
   { label: "Σ", latex: "\\Sigma", category: "Greek" },
   { label: "Ω", latex: "\\Omega", category: "Greek" },
+
+  // MicroEconomics
+  { label: "P", latex: "P", category: "MicroEconomics" },
+  { label: "Q", latex: "Q", category: "MicroEconomics" },
+  { label: "TC", latex: "TC", category: "MicroEconomics" },
+  { label: "MC", latex: "MC", category: "MicroEconomics" },
+  { label: "TR", latex: "TR", category: "MicroEconomics" },
+  { label: "MR", latex: "MR", category: "MicroEconomics" },
+  { label: "π (Profit)", latex: "\\pi", category: "MicroEconomics" },
+  { label: "ε (Elasticity)", latex: "\\epsilon", category: "MicroEconomics" },
+  { label: "U", latex: "U", category: "MicroEconomics" },
+  { label: "MRS", latex: "MRS", category: "MicroEconomics" },
+  { label: "MRT", latex: "MRT", category: "MicroEconomics" },
+  { label: "L", latex: "L", category: "MicroEconomics" },
+  { label: "K", latex: "K", category: "MicroEconomics" },
+  { label: "ATC", latex: "ATC", category: "MicroEconomics" },
+  { label: "AVC", latex: "AVC", category: "MicroEconomics" },
+  { label: "AFC", latex: "AFC", category: "MicroEconomics" },
 ];
